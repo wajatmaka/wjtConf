@@ -1,0 +1,14 @@
+[root]
+user: .+
+collection: ^/$
+permission: r
+
+[owner-write]
+user = .+
+collection = %(login)s/.*
+permission = rw
+
+[baca]
+user = .*
+collection =
+permission = r

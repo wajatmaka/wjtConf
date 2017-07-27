@@ -1,0 +1,59 @@
+#!/bin/bash
+# Init radicale for centos 6
+# by wajatmaka
+
+
+
+DATA=$1
+DAEMON_CHECK=`ps -ef | grep python3 | grep -v grep| grep radicale | wc -l `
+
+
+
+case $DATA in
+    start)
+    if [ $DAEMON_CHECK -eq 1 ]
+    then
+       echo "RADICALE RUNNING"
+    else
+       echo "RADICALE START" 
+       /usr/bin/python3 -m radicale --config "/opt/radicale/config"  
+    fi
+    ;;
+    status)
+    if [ $DAEMON_CHECK -eq 1 ]
+    then
+       echo "RADICALE RUNNING" 
+    else
+       echo "RADICALE NOT RUNNING"
+    fi  
+    ;;
+    stop)
+    if [ $DAEMON_CHECK -eq 0 ]
+    then
+       echo "RADICALE DIED"
+    else
+       ps -ef | grep python3 | grep -v grep| grep radicale  | awk -F" " '{print $2}'| xargs kill -9
+       rm /opt/radicale/pid/radicale.pid
+       echo "RADICALE DIE"       
+    fi
+    ;;
+    restart)
+    if [ $DAEMON_CHECK -eq 0 ]
+    then
+       echo "RADICALE DIED"
+       /usr/bin/python3 -m radicale --config "/opt/radicale/config"
+       echo "RADICALE RUNNING"
+    else
+       ps -ef | grep python3 | grep -v grep| grep radicale  | awk -F" " '{print $2}'| xargs kill -9
+       rm /opt/radicale/pid/radicale.pid
+       echo "RADICALE DIE"
+       /usr/bin/python3 -m radicale --config "/opt/radicale/config"
+       echo "RADICALE RUNNING"
+    fi
+
+    ;;
+    *)
+    echo "Command radicale restart|status|start|stop"
+    ;;
+esac
+

@@ -1,0 +1,11 @@
+/opt/radicale/logs/radicale.log {
+daily
+create
+rotate 5
+compress
+size=4M
+dateext
+dateformat -%d%m%Y
+notifempty
+}
+

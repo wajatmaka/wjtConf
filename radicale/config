@@ -1,0 +1,47 @@
+[server]
+hosts = 0.0.0.0:5232
+daemon = True
+pid = /opt/radicale/pid/radicale.pid 
+ssl = True
+certificate = /etc/httpd/cacerts/wajatmaka.com.crt
+key = /etc/httpd/cacerts/wajatmaka.com.key
+dns_lookup = True
+max_connections = 20
+max_content_length = 10000000
+timeout = 10
+realm = "LDAP Password Required"
+
+[encoding]
+request = utf-8
+stock = utf-8
+
+
+[auth]
+type = radicale_auth_ldap
+ldap_url = ldap://fatagar.wajatmaka.com:389
+ldap_base = ou=Users,dc=wajatmaka,dc=com
+ldap_attribute = uid
+ldap_filter = (objectclass=*)
+ldap_binddn = uid=ldapagent,ou=people,dc=wajatmaka,dc=com
+ldap_password = let fuck SsF
+ldap_scope = SUBTREE
+
+
+[rights]
+type = owner_write
+file = /opt/radicale/rights
+
+[storage]
+type = multifilesystem
+filesystem_folder = /opt/radicale/collections
+
+
+[headers]
+Access-Control-Allow-Origin = *
+
+[logging]
+config = /opt/radicale/logging
+debug = True
+full_environment = False
+mask_passwords = True
+
