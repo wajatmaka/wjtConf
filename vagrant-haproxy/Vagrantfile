@@ -1,0 +1,80 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# config.vm.network "forwarded_port", guest: 80, host: 8080
+# config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+# config.vm.network "private_network", ip: "10.32.5.9", netmask: "255.255.255.0"
+# config.vm.network "public_network"
+
+Vagrant.configure("2") do |config|
+
+	
+config.vm.define "haprox" do |haprox|
+  haprox.vm.box = "centos/7"
+  haprox.vm.hostname = "haprox.wajatmaka.com"
+  haprox.vm.network "private_network", ip: "192.168.33.9"
+  haprox.vm.synced_folder "~/Projects/VAGRANT/vagrant-haproxy/Share/haprox", "/haprox"
+  haprox.vm.provider "virtualbox" do |vb|
+     vb.name = "haproxy"
+     vb.memory = "1024"
+  end
+  haprox.vm.provision "shell", inline: <<-SHELL
+     uname -a
+  SHELL
+end
+
+config.vm.define "node1" do |node1|
+  node1.vm.box = "centos/7"
+  node1.vm.hostname = "node1.wajatmaka.com"
+  node1.vm.network "private_network", ip: "192.168.33.10"
+  node1.vm.synced_folder "~/Projects/VAGRANT/vagrant-haproxy/Share/node1", "/data1"
+  node1.vm.provider "virtualbox" do |vb|
+     vb.name = "node1"
+     vb.memory = "1024"
+  end
+  node1.vm.provision "shell", inline: <<-SHELL
+     uname -a
+     yum install httpd php
+  SHELL
+end
+
+config.vm.define "node2" do |node2|
+  node2.vm.box = "centos/7"
+  node2.vm.hostname = "node2.wajatmaka.com"
+  node2.vm.network "private_network", ip: "192.168.33.11"
+  node2.vm.hostname = "node1.wajatmaka.com"
+  node2.vm.synced_folder "~/Projects/VAGRANT/vagrant-haproxy/Share/node2", "/data2"
+  node2.vm.provider "virtualbox" do |vb|
+     vb.name = "node2"
+     vb.memory = "1024"
+  end 
+  node2.vm.provision "shell", inline: <<-SHELL
+     uname -a
+     yum install httpd php
+  SHELL
+end
+
+
+config.vm.define "node3" do |node3|
+  node3.vm.box = "centos/7"
+  node3.vm.hostname = "node3.wajatmaka.com"
+  node3.vm.network "private_network", ip: "192.168.33.12"
+  node3.vm.synced_folder "~/Projects/VAGRANT/vagrant_intro/Share/node3", "/data3"
+   node3.vm.provider "virtualbox" do |vb|
+     vb.name = "node3"
+     vb.memory = "1024"
+  end  
+  node3.vm.provision "shell", inline: <<-SHELL
+     uname -a
+     yum install httpd php
+  SHELL
+end
+
+config.group.groups = {
+  "my-vagrant" =>  [
+  	"node1",
+	"node2",
+	"node3"
+  ],
+}
+
+end

@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/wajatmaka/Projects/VAGRANT/vagrant-haproxy","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}},"virtualbox":{"/data1":{"guestpath":"/data1","hostpath":"/home/wajatmaka/Projects/VAGRANT/vagrant-haproxy/Share/node1","disabled":false,"__vagrantfile":true}}}
