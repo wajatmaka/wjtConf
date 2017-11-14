@@ -1,0 +1,30 @@
+upstream myapp {
+server 192.168.33.20:8000;
+server 192.168.33.18;
+}
+
+server {
+	listen 80 default_server;
+	index index.html index.htm;
+	server_name 192.168.33.19;
+	location / {
+		try_files $uri $uri/ =404;
+                proxy_pass http://myapp;
+	}
+}
+
+
+server {
+	listen 192.168.33.20:8000;
+        root /usr/share/nginx/html;
+        index index.html index.htm;
+        server_name 192.168.33.20;
+	location / {
+		try_files $uri $uri/ =404;
+	}
+        location = /50x.html {
+		root /usr/share/nginx/html;
+	}
+
+}
+
