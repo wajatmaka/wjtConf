@@ -1,0 +1,4 @@
+check process redis with pidfile /var/run/redis.pid
+      start program = "/usr/bin/systemctl start redis"
+      stop program = "/usr/bin/systemctl stop redis"
+if failed unixsocket /var/run/redis/redis.sock then restart

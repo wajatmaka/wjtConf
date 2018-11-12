@@ -1,0 +1,7 @@
+check process mysqld with pidfile /var/lib/mysql/vps.wajatmaka.com.pid
+  group mysql
+  start program = "/usr/bin/systemctl start mysql"
+  stop program = "/usr/bin/systemctl stop mysql"
+  if failed host 127.0.0.1 port 3306 then restart
+  if 5 restarts within 5 cycles then timeout
+

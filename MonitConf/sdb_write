@@ -1,0 +1,3 @@
+check program disk_sdb_write with path /home/senops/script/sdb_write.sh
+  if status != 0 then alert
+

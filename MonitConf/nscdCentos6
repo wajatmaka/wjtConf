@@ -1,0 +1,5 @@
+check process nscd with pidfile /var/run/nscd/nscd.pid
+    start program = "/etc/init.d/nscd start"
+    stop program = "/etc/init.d/nscd stop"
+    group server
+

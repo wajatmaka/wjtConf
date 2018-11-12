@@ -1,0 +1,5 @@
+check process postgres with pidfile /var/opt/gitlab/postgresql/data/postmaster.pid
+   group root
+   start program = "/usr/bin/gitlab-ctl start postgresql"
+   stop  program = "/usr/bin/gitlab-ctl stop postgresql"
+

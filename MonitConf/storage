@@ -1,0 +1,13 @@
+check filesystem root  path /dev/mapper/vg_app-lv_root
+	if space usage > 90% then alert
+check filesystem data path /dev/mapper/vg_data-lv_db
+	if space usage > 90% then alert
+check filesystem home path /dev/mapper/vg_app-lv_home
+	if space usage > 90% then alert
+check filesystem tmp path /dev/mapper/vg_app-lv_tmp
+	if space usage > 90% then alert
+check filesystem usr path /dev/mapper/vg_app-lv_usr
+	if space usage > 90% then alert
+check filesystem var path /dev/mapper/vg_app-lv_var
+	if space usage > 90% then alert
+

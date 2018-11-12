@@ -1,0 +1,7 @@
+check process amavisd with pidfile /var/run/amavisd/amavisd.pid
+   group amavis
+   start program = "/usr/bin/systemctl start amavisd"
+   stop  program = "/usr/bin/systemctl stop amavisd"
+   if failed host 127.0.0.1  port 10024 protocol smtp 
+     then alert
+

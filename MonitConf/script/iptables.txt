@@ -1,0 +1,46 @@
+Chain INPUT (policy DROP)
+target     prot opt source               destination         
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere            state NEW,RELATED,ESTABLISHED 
+ACCEPT     icmp --  anywhere             anywhere            icmp time-exceeded 
+ACCEPT     tcp  --  10.32.5.0/24         anywhere            tcp dpt:ssh state NEW,ESTABLISHED 
+ACCEPT     tcp  --  10.32.16.179         anywhere            tcp dpt:ssh state NEW,ESTABLISHED 
+ACCEPT     tcp  --  10.32.16.180         anywhere            tcp dpt:ssh state NEW,ESTABLISHED 
+ACCEPT     tcp  --  sec.1rstwap.com      anywhere            tcp dpt:ssh state NEW,ESTABLISHED 
+ACCEPT     tcp  --  sec.1rstwap.com      anywhere            tcp dpt:49777 state NEW,ESTABLISHED 
+ACCEPT     udp  --  10.32.16.179         anywhere            udp dpt:snmp state NEW,ESTABLISHED 
+ACCEPT     tcp  --  10.32.5.0/24         anywhere            tcp dpt:atmtcp state NEW,ESTABLISHED 
+ACCEPT     tcp  --  10.32.6.25           anywhere            tcp dpt:mysql 
+LOGGING    all  --  anywhere             anywhere            
+ACCEPT     tcp  --  anywhere             10.32.10.7          tcp dpt:mysql 
+ACCEPT     tcp  --  10.32.16.179         anywhere            tcp dpt:mysql 
+ACCEPT     all  --  kediri.1rstwap.com   anywhere            
+ACCEPT     all  --  garbd.1rstwap.com    anywhere            
+ACCEPT     tcp  --  10.32.13.10          anywhere            tcp dpt:mysql 
+ACCEPT     tcp  --  10.32.13.20          anywhere            tcp dpt:mysql 
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy DROP)
+target     prot opt source               destination         
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     tcp  --  anywhere             anywhere            state ESTABLISHED 
+ACCEPT     udp  --  anywhere             anywhere            state ESTABLISHED 
+ACCEPT     icmp --  anywhere             anywhere            
+ACCEPT     udp  --  anywhere             10.32.10.53         multiport dports domain,ntp state NEW,ESTABLISHED 
+ACCEPT     tcp  --  anywhere             10.32.15.190        multiport dports http,https state NEW,ESTABLISHED 
+ACCEPT     tcp  --  anywhere             sec.1rstwap.com     multiport dports ssh,49777 state NEW,ESTABLISHED 
+ACCEPT     tcp  --  anywhere             syslog.1rstwap.com  tcp dpt:systat 
+ACCEPT     tcp  --  anywhere             syslog.1rstwap.com  tcp dpt:systat state NEW 
+ACCEPT     all  --  anywhere             kediri.1rstwap.com  
+ACCEPT     all  --  anywhere             garbd.1rstwap.com   
+ACCEPT     tcp  --  anywhere             10.32.16.179        tcp dpt:smtp state NEW,ESTABLISHED 
+LOGGING    all  --  anywhere             anywhere            
+
+Chain LOGGING (2 references)
+target     prot opt source               destination         
+LOG        all  --  anywhere             anywhere            limit: avg 5/min burst 5 LOG level notice prefix `Incoming Dropped: ' 
+DROP       all  --  anywhere             anywhere            
+LOG        all  --  anywhere             anywhere            limit: avg 5/min burst 5 LOG level notice prefix `Outgoing Dropped: ' 
+DROP       all  --  anywhere             anywhere            

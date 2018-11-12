@@ -1,0 +1,6 @@
+check process sshd with pidfile /var/run/sshd.pid
+      start program = "/usr/bin/systemctl start sshd"
+      stop program = "/usr/bin/systemctl stop sshd"
+      if failed host 159.89.98.163 port 57913 type tcp then alert
+      if failed host 10.8.0.1 port 22 type tcp then alert
+

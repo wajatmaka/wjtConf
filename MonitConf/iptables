@@ -1,0 +1,6 @@
+check program iptables with path /home/senops/script/iptables.sh
+ if status != 0 then alert
+check file iptables-config with path /home/senops/script/iptables.txt
+ if failed with checksum 085ac2d604ea32d41d33262c66b4307b then alert
+check file iptables with path /etc/sysconfig/iptables
+   if changed timestamp then alert

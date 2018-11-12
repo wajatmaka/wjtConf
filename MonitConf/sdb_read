@@ -1,0 +1,3 @@
+check program disk_sdb_read with path /home/senops/script/sdb_read.sh
+  if status != 0 then alert
+

@@ -1,0 +1,8 @@
+check process rabbitmq with pidfile "/var/lib/rabbitmq/mnesia/rabbit@node1.pid"
+        group rabbitmq
+	start program = "/bin/systemctl start rabbitmq-server"
+	stop program = "/bin/systemctl stop rabbitmq-server"
+	if failed port 5672 then restart
+	if failed port 15672 then restart
+        if 5 restarts within 5 cycles then timeout
+

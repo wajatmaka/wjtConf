@@ -1,0 +1,42 @@
+check system vps.wajatmaka.com
+    if loadavg (5min) > 3 for 4 cycles then alert
+    if loadavg (15min) > 1 for 4 cycles then alert
+    if memory usage > 80% for 4 cycles then alert
+    if swap usage > 20% for 4 cycles then alert
+    if cpu usage (user) > 80% for 4 cycles then alert
+    if cpu usage (system) > 20% for 4 cycles then alert
+    if cpu usage (wait) > 20% for 4 cycles then alert
+
+check filesystem "root" with path /dev/vda1
+if space usage > 80% for 8 cycles then alert
+
+check file file_openvpn_server_conf with path /etc/openvpn/server.conf
+    if changed checksum then alert
+
+check file file_posfix_main_cf with path  /etc/postfix/main.cf
+    if changed checksum then alert
+
+check file file_dovecot_dovecot_conf with path /etc/dovecot/dovecot.conf
+    if changed checksum then alert
+
+check file file_monitrc_conf with path /etc/monitrc
+    if changed checksum then alert
+
+check file file_iptables_txt with path /etc/iptables/iptables.rules
+    if changed checksum then alert
+
+check file file_authorized_keys with path /home/wajatmaka/.ssh/authorized_keys
+    if changed checksum then alert
+
+check file file_sshd_config with path /etc/ssh/sshd_config
+    if changed checksum then alert
+
+check file file_cert_crt with path /etc/ssl/certs/iRedMail.crt
+    if changed checksum then alert
+
+check file file_cert_key with path /etc/pki/tls/private/iRedMail.key
+    if changed checksum then alert
+
+check file file_pem with path /etc/ssl/certs/monit.pem
+    if changed checksum then alert
+

@@ -1,0 +1,5 @@
+check process openvpn with pidfile /var/run/openvpn.pid
+      start program = "/usr/bin/systemctl start openvpn"
+      stop program = "/usr/bin/systemctl stop openvpn"
+      if failed host 127.0.0.1 port 13579 type tcp then alert
+

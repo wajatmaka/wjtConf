@@ -1,0 +1,13 @@
+check process syslog-ng with pidfile /var/run/syslogd.pid
+    start program = "/bin/systemctl start syslog-ng"
+    stop program = "/bin/systemctl stop syslog-ng"
+    #if failed unixsocket /dev/log then restart
+    depends on syslog-ng_bin
+
+check file syslog-ng_bin with path /usr/sbin/syslog-ng
+    group syslog-ng
+    if failed checksum then unmonitor
+    if failed permission 755 then unmonitor
+    if failed uid root then unmonitor
+    if failed gid root then unmonitor
+

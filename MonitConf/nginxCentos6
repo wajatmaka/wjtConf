@@ -1,0 +1,5 @@
+check process nginx with pidfile /var/opt/gitlab/nginx/nginx.pid
+  start program = "/usr/bin/gitlab-ctl start nginx"
+  stop program  = "/usr/bin/gitlab-ctl stop nginx"
+  group www-data
+

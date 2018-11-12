@@ -1,0 +1,6 @@
+check process php-fpm with pidfile /var/run/php-fpm/php-fpm.pid
+      start program = "/usr/bin/systemctl start php-fpm"
+      stop program = "/usr/bin/systemctl stop php-fpm"
+if failed unixsocket /var/run/www.sock then restart
+if failed host 127.0.0.1 port 9000 then restart
+
