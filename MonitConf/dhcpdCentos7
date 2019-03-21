@@ -1,0 +1,7 @@
+check process dhcpd with pidfile /var/run/dhcpd.pid
+  group dhcpd
+  start program = "/bin/systemctl start dhcpd"
+  stop  program = "/bin/systemctl stop dhcpd"
+  if failed host 127.0.0.1 port 67 type udp then restart
+  if 5 restarts within 5 cycles then timeout
+
