@@ -1,0 +1,17 @@
+[Unit]
+Description=Tirex-master service
+After=network.target
+ 
+[Service]
+Type=forking
+User=osm
+Group=osm
+ExecStart=/bin/tirex-master
+PIDFile=/var/run/tirex/tirex-master.pid
+ 
+# Give a reasonable amount of time for the server to start up/shut down
+#TimeoutSec=300
+ 
+[Install]
+WantedBy=multi-user.target
+
